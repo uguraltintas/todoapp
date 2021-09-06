@@ -16,4 +16,8 @@ class MainViewModel(val repository: ToDoRepository):ViewModel() {
     fun deleteData(item: ToDo) = GlobalScope.launch {
         repository.deleteData(item)
     }
+
+    fun updateData(item: ToDo, isChecked : Boolean) = GlobalScope.launch {
+        repository.updateData(item, isChecked)
+    }
 }

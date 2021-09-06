@@ -19,4 +19,7 @@ interface ToDoDAO {
 
     @Delete
     suspend fun deleteData(todo : ToDo)
+
+    @Query("UPDATE todo_items SET todo = :todo, isComplete = :isChecked WHERE id =:id")
+    suspend fun updateData(todo : String? , isChecked : Boolean, id : Int?)
 }

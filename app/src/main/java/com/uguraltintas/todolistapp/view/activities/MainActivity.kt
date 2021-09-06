@@ -5,11 +5,9 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuItem
+import android.view.*
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
@@ -26,10 +24,11 @@ import com.uguraltintas.todolistapp.viewmodel.MainViewModel
 import com.uguraltintas.todolistapp.viewmodel.MainViewModelFactory
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ToDoListAdapter.OnItemClickListener {
     lateinit var viewModel : MainViewModel
-    var adapter = ToDoListAdapter(arrayListOf())
+    var adapter = ToDoListAdapter(arrayListOf(),this)
     lateinit var recyclerView: RecyclerView
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +43,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
+
 
         viewModel.getAllData().observe(this, Observer {
             adapter.setTodoList(it)
@@ -66,10 +66,10 @@ class MainActivity : AppCompatActivity() {
                     viewModel.deleteData(adapter.getData(position))
 
                 }
-
             }
         )
         itemTouchHelper.attachToRecyclerView(recyclerView)
+
 
 
     }
@@ -88,6 +88,11 @@ class MainActivity : AppCompatActivity() {
 
         }
         return super.onOptionsItemSelected(item)
+    }
+
+
+    override fun onCheckBoxClick(toDo: ToDo, isChecked: Boolean) {
+        viewModel.updateData(toDo,isChecked)
     }
 
     fun showDialog(){

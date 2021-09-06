@@ -4,14 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
+    android:orientation="horizontal"
+    android:gravity="center"
     android:background="@color/cream">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="350dp"
+        android:layout_height="match_parent"
         android:id="@+id/recyclerTextView"
         android:text="To Do"
         android:textSize="20sp"
         android:padding="10dp"
         />
+
+    <CheckBox
+        android:id="@+id/recyclerCheckBox"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+         />
+
 </LinearLayout>
