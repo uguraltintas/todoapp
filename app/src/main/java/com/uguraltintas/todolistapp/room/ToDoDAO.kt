@@ -14,8 +14,8 @@ interface ToDoDAO {
     @Insert
     suspend fun insertAll(vararg todos: ToDo)
 
-    @Query("SELECT * FROM todo_items")
-    fun getAllData() : LiveData<List<ToDo>>
+    @Query("SELECT * FROM todo_items WHERE todo LIKE '%' || :searchQuery || '%'")
+    fun getAllData(searchQuery : String) : LiveData<List<ToDo>>
 
     @Delete
     suspend fun deleteData(todo : ToDo)

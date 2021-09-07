@@ -9,6 +9,7 @@ import android.view.*
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import androidx.appcompat.widget.SearchView
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -19,6 +20,7 @@ import com.uguraltintas.todolistapp.R
 import com.uguraltintas.todolistapp.model.ToDo
 import com.uguraltintas.todolistapp.room.ToDoDB
 import com.uguraltintas.todolistapp.room.ToDoRepository
+import com.uguraltintas.todolistapp.util.OnQueryTextChanged
 import com.uguraltintas.todolistapp.view.adapters.ToDoListAdapter
 import com.uguraltintas.todolistapp.viewmodel.MainViewModel
 import com.uguraltintas.todolistapp.viewmodel.MainViewModelFactory
@@ -76,6 +78,11 @@ class MainActivity : AppCompatActivity(), ToDoListAdapter.OnItemClickListener {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu,menu)
+        val searchItem = menu?.findItem(R.id.search_item)
+        val searchView  = searchItem?.actionView as SearchView
+        searchView.OnQueryTextChanged{
+            viewModel.searchQuery.value = it
+        }
         return true
     }
 
@@ -85,7 +92,6 @@ class MainActivity : AppCompatActivity(), ToDoListAdapter.OnItemClickListener {
                 showDialog()
                 true
             }
-
         }
         return super.onOptionsItemSelected(item)
     }
